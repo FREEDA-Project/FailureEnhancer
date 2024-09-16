@@ -25,3 +25,5 @@ failureEvent(S,T) :- unreachable(S,T); internal(S,T).
 
 anomaly(N,TI,TF) :- overloaded(N,_,TI,TF); % Resource \in {CPU,RAM,HDD,BW}
                     disconnected(N,TI,TF). 
+
+networkCongestion(N,M,TI,TF) :- networkCongestion(M,N,TI,TF).
