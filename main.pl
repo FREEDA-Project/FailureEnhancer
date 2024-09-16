@@ -1,15 +1,17 @@
+:- ['input.pl'].
+
 allSuggested(Constraints) :-
     findall(Constraint, suggested(Constraint), Cs),
     sort(Cs, Constraints). % remove duplicates
 
 suggested(affinity(d(C,FC),d(S,SF))) :-
-    deployedTo(C,FC,N), deployedTo(S,SF,M), dif(N,M),
+    deployedTo(C,FC,N), deployedTo(S,SF,M), dif(C,S), dif(N,M), 
     timeoutEvent(C,S,_).
     
 suggested(antiaffinity(d(C,FC),d(S,SF))) :-
     failureEvent(C,TE),
     overloaded(N,_,TI,TF), between(TI,TF,TE),
-    deployedTo(C,FC,N), deployedTo(S,SF,N).
+    deployedTo(C,FC,N), deployedTo(S,SF,N), dif(C,S).
 
 suggested(avoid(d(C,FC),N)) :-
     deployedTo(C,FC,N),
@@ -17,7 +19,7 @@ suggested(avoid(d(C,FC),N)) :-
     failureEvent(C,TE), between(TI,TF,TE).  % between(TI, TF, TE) <=> TI ≤ TE ≤ TF
 
 suggested(avoid(d(C,FC),N)) :-
-    deployedTo(C,FC,N), deployedTo(S,_,M), dif(N,M),
+    deployedTo(C,FC,N), deployedTo(S,_,M), dif(C,S), dif(N,M),
     networkCongestion(N,M,TI,TF), % Hp: networkCongestion(N,M) -> networkCongestion(M,N)
     timeoutEvent(C,S,TE), between(TI,TF,TE).
     
