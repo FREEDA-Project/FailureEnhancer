@@ -9,9 +9,10 @@ suggested(affinity(d(C,FC),d(S,SF))) :-
     timeoutEvent(C,S,_).
     
 suggested(antiaffinity(d(C,FC),d(S,SF))) :-
+    deployedTo(C,FC,N), deployedTo(S,SF,N), dif(C,S),
     failureEvent(C,TE),
     overloaded(N,_,TI,TF), between(TI,TF,TE),
-    deployedTo(C,FC,N), deployedTo(S,SF,N), dif(C,S).
+    C @< S.
 
 suggested(avoid(d(C,FC),N)) :-
     deployedTo(C,FC,N),
@@ -20,7 +21,7 @@ suggested(avoid(d(C,FC),N)) :-
 
 suggested(avoid(d(C,FC),N)) :-
     deployedTo(C,FC,N), deployedTo(S,_,M), dif(C,S), dif(N,M),
-    networkCongestion(N,M,TI,TF), % Hp: networkCongestion(N,M) -> networkCongestion(M,N)
+    networkCongestion(N,M,TI,TF),
     timeoutEvent(C,S,TE), between(TI,TF,TE).
     
 failureEvent(S,T) :- unreachable(S,T); internal(S,T).
@@ -28,4 +29,5 @@ failureEvent(S,T) :- unreachable(S,T); internal(S,T).
 anomaly(N,TI,TF) :- overloaded(N,_,TI,TF); % Resource \in {CPU,RAM,HDD,BW}
                     disconnected(N,TI,TF). 
 
-networkCongestion(N,M,TI,TF) :- networkCongestion(M,N,TI,TF).
+networkCongestion(N,M,TI,TF) :- congested(N,M,TI,TF).
+networkCongestion(N,M,TI,TF) :- congested(M,N,TI,TF), dif(N,M).

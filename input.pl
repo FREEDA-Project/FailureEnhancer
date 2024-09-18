@@ -1,10 +1,19 @@
-deployedTo(a,large,n42).
-deployedTo(b,tiny,n42).
+% Deployment
+deployedTo(frontend, large, n1).
+deployedTo(backend, medium, n2).
+deployedTo(database, large, n2).
+deployedTo(frontend2, medium, n3).
 
-overloaded(n42,ram,1,10).
+% Frontend failed to contact the backend
+timeoutEvent(frontend, backend, 8).
 
-unreachable(a,5).
-internal(b,3).
-internal(dummy,-1).
-disconnected(dummy, -1, -1).
-networkCongestion(dummy,dummy,-1,-1).
+% Backend internal failure and database unreachable
+internal(backend, 7).
+unreachable(database, 6).
+
+% n2 overloaded and n1 disconnected
+overloaded(n2, cpu, 5, 10).
+disconnected(n3, 3, 4).
+
+% Network congestion between n1 and n2 affecting communication
+congested(n2, n3, 6, 9).
