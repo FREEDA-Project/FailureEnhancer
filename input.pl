@@ -11,9 +11,9 @@ timeoutEvent(frontend, backend, 8).
 internal(backend, 7).
 unreachable(database, 6).
 
-% n2 overloaded and n1 disconnected
+% n2 overloaded and n3 disconnected
 overloaded(n2, cpu, 5, 10).
 disconnected(n3, 3, 4).
 
-% Network congestion between n1 and n2 affecting communication
+% Network congestion between n2 and n3 affecting communication
 congested(n2, n3, 6, 9).
