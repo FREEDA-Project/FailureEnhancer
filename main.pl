@@ -7,7 +7,7 @@ allSuggested(Constraints) :-
 suggested(affinity(d(C,FC),d(S,SF))) :-
     deployedTo(C,FC,N), deployedTo(S,SF,M), dif(C,S), dif(N,M), 
     timeoutEvent(C,S,_).
-    
+
 suggested(antiaffinity(d(C,FC),d(S,SF))) :-
     deployedTo(C,FC,N), deployedTo(S,SF,N), dif(C,S),
     failureEvent(C,TE),
