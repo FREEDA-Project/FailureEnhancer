@@ -9,7 +9,7 @@ unreachable(database, 6).
 internal(backend, 7).
 
 % webfrontend failed to contact the backend
-timeoutEvent(frontend, backend, 8).
+timeoutEvent(webfrontend, backend, 8).
 
 % n2 overloaded and n3 disconnected
 overloaded(n2, cpu, 5, 10).
