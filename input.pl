@@ -20,3 +20,4 @@ congested(n2, n3, 8, 10).
 
 % mobilefrontend failed to contact the backend
 timeoutEvent(mobilefrontend, backend, 9).
+congested(n2, n3, 6, 9).
