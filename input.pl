@@ -1,26 +1,20 @@
 % Deployment
-deployedTo(webfrontend, large, n1).
+deployedTo(frontend, large, n1).
 deployedTo(backend, medium, n2).
 deployedTo(database, large, n2).
-deployedTo(mobilefrontend, medium, n3).
 
 % Backend internal failure and database unreachable
 unreachable(database, 6).
 internal(backend, 7).
 
-% webfrontend failed to contact the backend
-timeoutEvent(webfrontend, backend, 8).
+% frontend failed to contact the backend
+timeoutEvent(frontend, backend, 8).
 
-% n2 overloaded and n3 disconnected
 %  highUsage(S, FS, R, TI, TF),
-highUsage(backend,medium,cpu,5,10).
-highUsage(database,large,cpu,5,10).
-overload(n2, cpu, 5, 10).
-disconnection(n3, 3, 4).
+highUsage(backend, medium, cpu, 6, 9).
+highUsage(database, large, cpu, 5, 9).
+overload(n2, cpu, 6, 9).
 
-% Network congestion between n2 and n3 affecting communication
-congestion(n2, n3, 8, 10).
-
-% mobilefrontend failed to contact the backend
-timeoutEvent(mobilefrontend, backend, 9).
-
+% Network congestion between n1 and n2 affecting communication
+congestion(n1, n2, 7, 9).
+disconnection(n1, 4, 6).
