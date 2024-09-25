@@ -12,11 +12,15 @@ internal(backend, 7).
 timeoutEvent(webfrontend, backend, 8).
 
 % n2 overloaded and n3 disconnected
-overloaded(n2, cpu, 5, 10).
-disconnected(n3, 3, 4).
+%  highUsage(S, FS, R, TI, TF),
+highUsage(backend,medium,cpu,5,10).
+highUsage(database,large,cpu,5,10).
+overload(n2, cpu, 5, 10).
+disconnection(n3, 3, 4).
 
 % Network congestion between n2 and n3 affecting communication
-congested(n2, n3, 8, 10).
+congestion(n2, n3, 8, 10).
 
 % mobilefrontend failed to contact the backend
 timeoutEvent(mobilefrontend, backend, 9).
+
