@@ -6,25 +6,31 @@ allSuggested(Constraints) :-
 suggested(affinity(d(C,FC),d(S,FS))) :-
     deployedTo(C,FC,N), deployedTo(S,FS,M), dif(C,S), dif(N,M), 
     timeoutEvent(C,S,T),
-    \+( congested(N,M,T); disconnected(N,T) ).
-    
-suggested(antiaffinity(d(C,FC),d(S,FS))) :-
-    deployedTo(C,FC,N), componentFailure(C,T),
-    overloaded(N,R,T),
-    race(N,R,C,FC,S,FS,T).
-
-suggested(avoid(d(C,FC),N)) :-
-    deployedTo(C,FC,N),
-    componentFailure(C,T), 
-    ( disconnected(N,T); overloaded(N,_,T) ),
-    \+ race(N,_,C,FC,_,_,T).
+    \+( congested(N,M,T); disconnected(N,T); disconnected(M,T) ).
 
 suggested(avoid(d(C,FC),N)) :-
     deployedTo(C,FC,N), deployedTo(S,_,M), dif(C,S), dif(N,M),
     timeoutEvent(C,S,T),
     ( congested(N,M,T); disconnected(N,T) ).
-   
-componentFailure(S,T) :- unreachable(S,T); internal(S,T).
+
+suggested(avoid(d(S,FS),M)) :-
+    deployedTo(C,_,N), deployedTo(S,FS,M), dif(C,S), dif(N,M),
+    timeoutEvent(C,S,T),
+    ( congested(N,M,T); disconnected(M,T) ).
+
+suggested(avoid(d(C,FC),N)) :-
+    deployedTo(C,FC,N),
+    ( unreachable(C,T); internal(C,T) ),
+    ( (overloaded(N,_,T), \+ race(N,_,C,FC,_,_,T)) ; disconnected(N,T)).
+
+suggested(antiaffinity(d(C,FC),d(S,FS))) :-
+    deployedTo(C,FC,N), 
+    ( unreachable(C,T); internal(C,T) ),
+    overloaded(N,R,T), 
+    race(N,R,C,FC,S,FS,T).
+
+
+
 
 congested(N,M,T) :- congestion(N,M,TI,TF), between(TI,TF,T).
 congested(N,M,T) :- congestion(M,N,TI,TF), dif(N,M), between(TI,TF,T).
