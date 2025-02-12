@@ -6,4 +6,4 @@ This PoC implementation was part of the publication titled _Enhancing Failure Re
 
 [Input_Illustrative_Example.pl](Input_Illustrative_Example.pl) contains an example of the input that the reasoner receives.
 
-![Timeline](/images/timeline.pdf)
+![Timeline](/images/timeline.png)
