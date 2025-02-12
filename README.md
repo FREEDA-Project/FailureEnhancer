@@ -4,6 +4,6 @@ This PoC implementation was part of the publication titled _Enhancing Failure Re
 
 [main.pl](main.pl) contains the PoC implementation of the reasoner used to generate a set of suggested soft constraints to improve the resilience of the current deployment by embedding rules of thumb to improve placement decisions.
 
-[Input_Illustrative_Example.pl](Input_Illustrative_Example.pl) contains an example of the input that the reasoner receives.
+[Input_Illustrative_Example.pl](Input_Illustrative_Example.pl) contains an example of the input that the reasoner receives. The first part of the file contains the deployment information illustrated on the left side of the image below. The rest of the file contains information about the events, represented on the right side of the image below.
 
 ![Timeline](/images/timeline.png)
